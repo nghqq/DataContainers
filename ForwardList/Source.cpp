@@ -39,6 +39,7 @@ public:
 	}
 	~ForwardList()
 	{
+		while (Head)pop_front();
 		std::cout << "LDestructor:\t" << this << std::endl;
 	}
 					//Adding elements:
