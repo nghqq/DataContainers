@@ -16,6 +16,8 @@ public:
 		count++;
 		std::cout << "EConstructor:\t " << this << std::endl;
 	}
+
+	
 	~Element() 
 	{
 		count--;
@@ -37,11 +39,53 @@ public:
 		this->Head = nullptr; // Если список пуст, его Голова указывает на 0
 		std::cout << "LConstructor:\t" << this << std::endl;
 	}
+
+	ForwardList(std::initializer_list<int>il) :ForwardList() 
+	{
+		
+	}
+
+					//CopyConstuctors:
+
+	ForwardList(const ForwardList& other) 
+	{
+		this->Head = other.Head;
+		std::cout << "CopyConstructor:" << this << std::endl;
+	}
+	ForwardList(const ForwardList&& other)
+	{
+		this->Head = other.Head; // Не получается занулить 'other'
+
+		std::cout << "MoveConstructor:" << this << std::endl;
+	}
+
+
 	~ForwardList()
 	{
 		while (Head)pop_front();
 		std::cout << "LDestructor:\t" << this << std::endl;
 	}
+			
+				//Assignment operators:
+
+	ForwardList& operator =(const ForwardList& other) 
+	{
+		this->Head = other.Head;
+		std::cout << "CopyAssignment:" << this << std::endl;
+		return *this;
+	}
+	ForwardList& operator = (ForwardList&& other) 
+	{
+		if (this == &other)return *this;
+
+		this->Head = other.Head;
+		other.Head = nullptr;
+		std::cout << "MoveAssignment:" << this << std::endl;
+
+	}
+
+
+
 					//Adding elements:
 
 	void push_front(int Data)
@@ -137,10 +181,14 @@ public:
 		//std::cout << "Колл-во элементов в списке: " << Head->count << std::endl;
 		std::cout << "Колл-во элементов в списке: " << Element::count << std::endl; // к статическим полям принято обращаться через имя класса и оператор разрешения видимости (::)
 	}
+
+	
 };
 
 //#define BASE_CHECK
 //#define INSERT_CHECK
+//#define RANGE_BASED_FOR_ARRAYS
+#define RANGE_BASED_FOR_LIST
 
 void main() 
 {
@@ -182,15 +230,30 @@ void main()
 
 #endif // BASE_CHECK
 
+#ifdef RANGE_BASED_FOR_ARRAYS
 	int arr[] = { 3,5,8,13,21 };
-	for (int i = 0; i < sizeof(arr)/sizeof(arr[0]); i++)
+	for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
 	{
 		std::cout << arr[i] << tab;
 	}
 	std::cout << std::endl;
-	for (int i : arr) 
+	for (int i : arr)
 	{
 		std::cout << i << tab;
 	}
 	std::cout << std::endl;
+#endif // RANGE_BASED_FOR_ARRAYS
+
+#ifdef  RANGE_BASED_FOR_LIST
+	ForwardList list = { 3,5,8,13,21 };
+	list.print();
+
+	for (int i : list) 
+	{
+		std::cout << i << tab;
+	}
+	std::cout << std::endl;
+#endif //  RANGE_BASED_FOR_LIST
+
+
 }
