@@ -139,8 +139,8 @@ public:
 	}
 };
 
-#define BASE_CHECK
-#define INSERT_CHECK
+//#define BASE_CHECK
+//#define INSERT_CHECK
 
 void main() 
 {
@@ -182,6 +182,15 @@ void main()
 
 #endif // BASE_CHECK
 
-
-
+	int arr[] = { 3,5,8,13,21 };
+	for (int i = 0; i < sizeof(arr)/sizeof(arr[0]); i++)
+	{
+		std::cout << arr[i] << tab;
+	}
+	std::cout << std::endl;
+	for (int i : arr) 
+	{
+		std::cout << i << tab;
+	}
+	std::cout << std::endl;
 }
