@@ -176,6 +176,7 @@ public:
 		while (Head)pop_front();
 		for (Element* Temp = other.Head; Temp;Temp=Temp->pNext)
 			push_front(Temp->Data);
+		reverse();
 		std::cout << "CopyAssignment:\t" << this << std::endl;
 		return *this;
 		
@@ -416,4 +417,6 @@ void main()
 	std::cout << "Copying list...."; std::cout << std::endl;
 	ForwardList list_2 = list;
 	std::cout << "List copied for" << double(end - start) / CLOCKS_PER_SEC << std::endl;
+
+	
 }
