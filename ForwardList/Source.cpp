@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-
+#include <ctime>
 #define tab "\t"
 
 class Element
@@ -175,7 +175,7 @@ public:
 		if (this == &other)return *this;
 		while (Head)pop_front();
 		for (Element* Temp = other.Head; Temp;Temp=Temp->pNext)
-			push_back(Temp->Data);
+			push_front(Temp->Data);
 		std::cout << "CopyAssignment:\t" << this << std::endl;
 		return *this;
 		
@@ -270,6 +270,18 @@ public:
 
 	//  Methods
 
+	void reverse() 
+	{
+		ForwardList reverse;
+		while (Head) 
+		{
+			reverse.push_front(Head->Data);
+			this->pop_front();
+		}
+		this->Head = reverse.Head;
+		reverse.Head = nullptr;
+	}
+
 	void print()const
 	{
 		/*Element* Temp = Head; // Temp это итератор.
@@ -285,8 +297,8 @@ public:
 		std::cout << "Колл-во элементов в списке: " << this->size << std::endl;
 		std::cout << "Общее колличество  элементов в списке: " << Element::count << std::endl; // к статическим полям принято обращаться через имя класса и оператор разрешения видимости (::)
 	}
-
-
+	
+	
 };
 
 ForwardList operator+(const ForwardList& left, const ForwardList& right)
@@ -303,6 +315,7 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right)
 //#define RANGE_BASED_FOR_LIST
 #define COPY_METHODS_CHECK
 #define FORWARD_LIST_PREFORMANCE_LIST
+//#define PLUS_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -373,6 +386,8 @@ void main()
 	std::cout << std::endl;
 #endif //  RANGE_BASED_FOR_LIST
 
+#ifdef PLUS_CHECK
+
 	ForwardList list_1 = { 3,5,8,13,21 };
 	for (int i : list_1)std::cout << i << tab; std::cout << std::endl;
 
@@ -382,4 +397,23 @@ void main()
 	ForwardList list_3 = list_1 + list_2;
 	for (int i : list_3)std::cout << i << tab; std::cout << std::endl;
 	list_3.print();
+
+#endif PLUS_CHECK
+
+	int n;
+	std::cout << "Введите размер списка :"; std::cin >> n;
+	ForwardList list;
+	clock_t start = clock();
+	for (int i = 0; i < n; i++)
+	{
+		int value = rand() % 100;
+		list.push_front(rand() % 100);
+
+	}
+	std::cout << std::endl;
+	clock_t end = clock();
+	std::cout << "Data loading: " << double(end - start) / CLOCKS_PER_SEC << std::endl;
+	std::cout << "Copying list...."; std::cout << std::endl;
+	ForwardList list_2 = list;
+	std::cout << "List copied for" << double(end - start) / CLOCKS_PER_SEC << std::endl;
 }
