@@ -8,7 +8,7 @@ public:
 	Element* pNext;
 
 
-		//Constuctor
+		//Constructor
 	Element(double data) 
 	{
 		this->data = data;
@@ -29,7 +29,7 @@ class LinkedList
 	int size;
 
 public:
-			//Constuctor
+			//Constructor
 
 	LinkedList()
 	{
