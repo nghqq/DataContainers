@@ -34,7 +34,7 @@ public:
 	}
 	~List() 
 	{
-		while (Head)pop_front();
+		while (Head)pop_back();
 		std::cout << "LDestuctor:\t" << this << std::endl;
 	}
 
@@ -88,6 +88,7 @@ public:
 		Head = Head->pNext;
 		delete Head->pPrev;
 		Head->pPrev = nullptr;
+		size--;
 	}
 
 	void pop_back() 
@@ -95,13 +96,14 @@ public:
 		if (Head == nullptr && Tail == nullptr)return;
 		if (Head == Tail) 
 		{
-			delete Head;
+			delete Tail;
 			Head = Tail = nullptr;
 			return;
 		}
 		Tail = Tail->pPrev;
 		delete Tail->pNext;
 		Tail->pNext = nullptr;
+		size--;
 	}
 
 	// Methods
@@ -139,4 +141,6 @@ void main()
 	}
 	list.print();
 	list.reverse_print();
+	list.pop_back();
+	list.print();
 }
