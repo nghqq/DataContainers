@@ -71,6 +71,7 @@ public:
 		}
 		size++;
 	}
+	
 
 					//Removing elements
 
@@ -86,6 +87,20 @@ public:
 		Head = Head->pNext;
 		delete Head->pPrev;
 		Head->pPrev = nullptr;
+	}
+
+	void pop_back() 
+	{
+		if (Head == nullptr && Tail == nullptr)return;
+		if (Head == Tail) 
+		{
+			delete Head;
+			Head = Tail = nullptr;
+			return;
+		}
+		Tail = Tail->pPrev;
+		delete Tail->pNext;
+		Tail->pNext = nullptr;
 	}
 
 	// Methods
