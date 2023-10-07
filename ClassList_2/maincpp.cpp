@@ -38,6 +38,7 @@ public:
 		std::cout << "LDestuctor:\t" << this << std::endl;
 	}
 
+
 	void push_front(int Data) 
 	{
 		if (Head == nullptr && Tail == nullptr) 
