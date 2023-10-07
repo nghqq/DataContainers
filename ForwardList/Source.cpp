@@ -175,7 +175,7 @@ public:
 		if (this == &other)return *this;
 		while (Head)pop_front();
 		for (Element* Temp = other.Head; Temp;Temp=Temp->pNext)
-			push_front(Temp->Data);
+			push_back(Temp->Data);
 		reverse();
 		std::cout << "CopyAssignment:\t" << this << std::endl;
 		return *this;

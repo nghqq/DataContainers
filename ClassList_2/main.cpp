@@ -32,13 +32,32 @@ public:
 		std::cout << "LConstructor:\t" << this << std::endl;
 
 	}
+	List(const std::initializer_list<int>& il) : List() 
+	{
+		for (const int* it = il.begin(); it != il.end(); it++)   // it это ИТЕРАТОР !!!!!!!!!
+			push_back(*it);
+	}
 	~List() 
 	{
 		while (Head)pop_back();
 		std::cout << "LDestuctor:\t" << this << std::endl;
 	}
 
+	/*void insert(int Data, int index)
+	{
+		if (index == 0)return push_front(Data);
+		if (index >= index) return push_back(Data);
+		Element* Temp;
+		{
+			Temp = Head;
+			for (int i = index; i < index; i++)Temp=Temp->pNext;
+			{
 
+			}
+		}
+
+	}*/
+	
 	void push_front(int Data) 
 	{
 		if (Head == nullptr && Tail == nullptr) 
@@ -93,16 +112,42 @@ public:
 
 	void pop_back() 
 	{
-		if (Head == nullptr && Tail == nullptr)return;
-		if (Head == Tail) 
+		/*if (Head == nullptr && Tail == nullptr)return;
+		if (Head == Tail)
 		{
 			delete Tail;
 			Head = Tail = nullptr;
 			return;
-		}
+		}*/
+		if (Head == Tail)return pop_back();
 		Tail = Tail->pPrev;
 		delete Tail->pNext;
 		Tail->pNext = nullptr;
+		size--;
+	}
+	
+	void erase(int index) 
+	{
+		if (index == 0)return pop_front();
+		if (index == size - 1)return pop_back();
+		if (index >= size)return;
+
+		Element* Temp;
+		if (index < size / 2)
+		{
+			Temp = Head;
+			for (int i = 0; i < index; i++)Temp = Temp->pNext;
+			
+		}
+		if (index > size / 2)
+		{
+			Temp = Tail;
+			for (int i = 0; i < index; i++)Temp = Temp->pPrev;
+
+		}
+		Temp->pPrev->pNext = Temp->pNext;
+		Temp->pNext->pPrev = Temp->pPrev;
+		delete Temp;
 		size--;
 	}
 
@@ -128,10 +173,12 @@ public:
 	
 };
 
+//#define BASE_CHECK
 void main() 
 {
 	setlocale(LC_ALL, "");
 
+#ifdef BASE_CHECK
 	int n;
 	std::cout << "Введите размер списка: "; std::cin >> n;
 	List list;
@@ -142,5 +189,8 @@ void main()
 	list.print();
 	list.reverse_print();
 	list.pop_back();
+	list.print();
+#endif // BASE_CHECK
+	List list = { 3,5,8,13,21 };
 	list.print();
 }
