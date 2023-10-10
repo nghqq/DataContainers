@@ -126,6 +126,16 @@ public:
 			  return Temp->Data;
 		  }
 	  };
+	  class ReverseIterator :public ConstReverseIterator 
+	  {
+		  ReverseIterator(Element* Temp = nullptr) :ConstReverseIterator(Temp){}
+		  ~ReverseIterator(){}
+		  int& operator*() 
+		  {
+			  return Temp->Data;
+		  }
+	  };
+
 	ConstIterator begin() const
 	{
 		return Head;
