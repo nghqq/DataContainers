@@ -52,6 +52,7 @@ class List
 			  return  Temp->Data;
 		  }
 	};
+	
 public:
 	  class ConstIterator: public ConstBaseIterator
 	{
@@ -83,9 +84,6 @@ public:
 			Temp = Temp->pPrev;
 			return old;
 		}
-		 
-		 
-
 	};
 	  class ConstReverseIterator:public ConstBaseIterator
 	{
@@ -118,7 +116,16 @@ public:
 		}
 		
 	};
-
+	  class Iterator :public ConstIterator
+	  {
+	  public:
+		  Iterator(Element* Temp = nullptr):ConstIterator(Temp){}
+		  ~Iterator(){}
+		  int& operator*() 
+		  {
+			  return Temp->Data;
+		  }
+	  };
 	ConstIterator begin() const
 	{
 		return Head;
@@ -323,6 +330,13 @@ List operator+ (const List& left, const List& right)
 	return cat;
 }
 
+void reverse_print(const List& list) 
+{
+	for (List::ConstReverseIterator it = list.rbegin(); it != list.rend()it++) 
+	{
+		std::cout << *it << tab;
+	}
+}
 //#define BASE_CHECK
 //#define BASE_CHECK_2
 //#define ITERATORS_CHECK
@@ -387,6 +401,9 @@ void main()
 	std::cout << std::endl;
 	for (int i : list_3)std::cout << i << tab;
 	std::cout << std::endl;
+
+	reverse_print(list_3)
 	
+
 
 }
