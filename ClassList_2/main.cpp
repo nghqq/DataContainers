@@ -25,7 +25,7 @@ class List
 	//Директива typedef даёт существующему типу данных новое имя:
 	//typedef существующий_тип_данных новоем_имя_этого_типа;
 public:
-	class Iterator 
+	  class Iterator 
 	{
 		Element* Temp;
 
@@ -33,41 +33,41 @@ public:
 		Iterator(Element*Temp=nullptr):Temp(Temp){}
 		~Iterator(){}
 
-		Iterator& operator++()
+		 Iterator& operator++()
 		{
 			Temp = Temp->pNext;
 			return *this;
 		}
-		Iterator& operator++(int) 
+		 Iterator& operator++(int) 
 		{
 			Iterator old = *this;
 			Temp = Temp->pNext;
 			return old;
 		}
-		Iterator& operator--()
+		 Iterator& operator--()
 		{
 			Temp = Temp->pPrev;
 			return *this;
 		}
-		Iterator& operator--(int)
+		 Iterator& operator--(int)
 		{
 			Iterator old = *this;
 			Temp = Temp->pPrev;
 			return old;
 		}
-		bool operator==(const Iterator& other)const 
+		 bool operator==(const Iterator& other)const 
 		{
 			return this->Temp == other.Temp;
 		}
-		bool operator!=(const Iterator& other)const 
+		 bool operator!=(const Iterator& other)const 
 		{
 			return this->Temp != other.Temp;
 		}
-		 const int& operator*() const
+		   int& operator*() const
 		{
 			return Temp->Data;
 		}
-		  int& operator*()
+		   int& operator*()
 		 {
 			 return Temp->Data;
 		 }
