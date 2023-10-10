@@ -56,6 +56,7 @@ class List
 public:
 	  class ConstIterator: public ConstBaseIterator
 	{
+	protected:
 		Element* Temp;
 
 	public: 
@@ -342,7 +343,7 @@ List operator+ (const List& left, const List& right)
 
 void reverse_print(const List& list) 
 {
-	for (List::ConstReverseIterator it = list.rbegin(); it != list.rend()it++) 
+	for (List::ConstReverseIterator it = list.rbegin(); it != list.rend();it++) 
 	{
 		std::cout << *it << tab;
 	}
