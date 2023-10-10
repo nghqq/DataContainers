@@ -314,7 +314,7 @@ List operator+ (const List& left, const List& right)
 	List cat = left;
 	for (List::Iterator it = right.begin(); it != right.end(); it++)
 
-		cat.push_back((*it)*=10);
+		cat.push_back ((*it)*=10);
 	return cat;
 	
 }
