@@ -413,7 +413,7 @@ void main()
 	for (int i : list_3)std::cout << i << tab;
 	std::cout << std::endl;
 
-	reverse_print(list_3)
+	reverse_print(list_3);
 	
 
 
