@@ -57,10 +57,10 @@ public:
 	  class ConstIterator: public ConstBaseIterator
 	{
 	protected:
-		Element* Temp;
+		//Element* Temp;
 
 	public: 
-		ConstIterator(Element*Temp=nullptr):Temp(Temp){}
+		ConstIterator(Element*Temp=nullptr):ConstBaseIterator(Temp){}
 		~ConstIterator(){}
 
 		 ConstIterator& operator++()
@@ -129,6 +129,7 @@ public:
 	  };
 	  class ReverseIterator :public ConstReverseIterator 
 	  {
+	  public:
 		  ReverseIterator(Element* Temp = nullptr) :ConstReverseIterator(Temp){}
 		  ~ReverseIterator(){}
 		  int& operator*() 
@@ -150,6 +151,23 @@ public:
 		return Tail;
 	}
 	ConstReverseIterator rend() const
+	{
+		return nullptr;
+	}
+
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end() 
+	{
+		return nullptr;
+	}
+	ReverseIterator rbegin() 
+	{
+		return Tail;
+	}
+	ReverseIterator rend() 
 	{
 		return nullptr;
 	}
@@ -339,6 +357,7 @@ List operator+ (const List& left, const List& right)
 		cat.push_back(*it);
 	}
 	return cat;
+	
 }
 
 void reverse_print(const List& list) 
@@ -347,6 +366,7 @@ void reverse_print(const List& list)
 	{
 		std::cout << *it << tab;
 	}
+	std::cout << std::endl;
 }
 //#define BASE_CHECK
 //#define BASE_CHECK_2
@@ -414,6 +434,13 @@ void main()
 	std::cout << std::endl;
 
 	reverse_print(list_3);
+	for (List::Iterator it = list_3.begin(); it != list_3.end(); it++) 
+	{
+		*it *= 10;
+	}
+	for (int i : list_3)std::cout << i << tab;
+	std::cout << std::endl;
+	
 	
 
 
