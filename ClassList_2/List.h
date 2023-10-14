@@ -1,7 +1,5 @@
 #pragma once
-
 #include<iostream>
-
 #define tab "\t"
 
 template<typename T>
