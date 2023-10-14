@@ -157,11 +157,8 @@ public:
 	List(const List<T>& other);
 	~List();
 	// Operators
-
 	List<T>& operator=(const List<T>& other);
-
 	void insert(T Data, int index);
-
 	void push_front(T Data);
 	void push_back(T Data);
 
@@ -169,9 +166,7 @@ public:
 	//Removing elements
 
 	void pop_front();
-
 	void pop_back();
-
 	void erase(int index);
 
 	// Methods
