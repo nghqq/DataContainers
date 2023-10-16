@@ -4,99 +4,101 @@
 
 class BinaryTree 
 {
-	class Element
+	class Element 
 	{
 		int Data;
 		Element* pLeft;
 		Element* pRight;
 	public:
-		Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr) : Data(Data), pLeft(pLeft), pRight(pRight)
+		Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr) :Data(Data), pLeft(pLeft), pRight(pRight) 
 		{
-			std::cout << "EConstructor: \t" << this << std::endl;
+			std::cout << "Econstructor:\t" << this << std::endl;
 		}
-		~Element()
+		~Element() 
 		{
-			std:: cout<<"EDestructor: \t" << this << std::endl;
+			std::cout << "Edestructor:\t" << this << std::endl;
 		}
 		friend class BinaryTree;
 	}*Root;
 public:
+	 Element* get_root()
+	{
+		return Root;
+	}
 	BinaryTree() 
 	{
 		Root = nullptr;
 		std::cout << "BTConstructor:\t" << this << std::endl;
 	}
-	BinaryTree() 
+	~BinaryTree()
 	{
 		std::cout << "BTDestructor:\t" << this << std::endl;
 	}
-	void Insert(int Data,Element* Root) 
+
+	void insert(int Data, Element* Root) 
 	{
 		if (this->Root == nullptr)this->Root = new Element(Data);
 		if (Root == nullptr)return;
 		if (Data < Root->Data) 
 		{
-			if (Root->pLeft = nullptr)Root = new Element(Data);
-			else Insert(Data, Root->pLeft);
+			if (Root->pLeft == nullptr)Root->pLeft = new Element(Data);
+			else insert(Data, Root->pLeft);
 		}
 		else 
 		{
-			if (Root->pRight = nullptr)Root = new Element(Data);
-			else Insert(Data, Root->pRight);
-
+			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
+			else insert(Data, Root->pRight);
 		}
 	}
 	void print(Element* Root) 
 	{
-		if (Root = nullptr)return;
+		if (Root == nullptr)return;
 		print(Root->pLeft);
 		std::cout << Root->Data << tab;
 		print(Root->pRight);
 	}
-
 	int minValue(Element* Root) 
 	{
 		if (Root->pLeft == nullptr)return Root->Data;
 		else return minValue(Root->pLeft);
 	}
-	int maxValue(Element* Root)
+	int maxValue(Element* Root) 
 	{
 		if (Root->pRight == nullptr)return Root->Data;
-		else return maxValue(Root->pLeft);
+		else return maxValue(Root->pRight);
 	}
-	int Sum(Element* Root) 
+	int sum(Element* Root) 
 	{
 		if (Root == nullptr)return 0;
-		else return Root->Data + Sum(Root->pLeft) + Sum(Root->pRight);
-	}
-	int Count(Element* Root)
-	{
-		if (Root == nullptr)return 0;
-		else return Count(Root->pLeft) + Count(Root->pRight)+1;
-	}
-	double AVG() 
-	{
-		return (double)Sum(Root) / Count(Root);
-	}
-};
+		else return Root->Data + sum(Root->pLeft) + sum(Root->pRight);
 
-void main()
+	}
+	int count(Element* Root) 
+	{
+		if (Root == nullptr)return 0;
+		else return count(Root->pLeft) + count(Root->pRight) + 1;
+	}
+	double avg() 
+	{
+		return(double) sum(Root) / count(Root);
+	}
+}; 
+
+void main() 
 {
 	setlocale(LC_ALL, "");
 	int n;
-	BinaryTree tree;
 	std::cout << "Введите размер дерева: "; std::cin >> n;
-	for (size_t i = 0; i < n; i++)
+	BinaryTree tree;
+	for (int i = 0; i < n; i++)
 	{
-		tree.Insert(rand() % 100, tree.get_Root());
+		tree.insert(rand()%100, tree.get_root());
 	}
-	tree.print(tree.get_Root());
+	tree.print(tree.get_root());
 	std::cout << std::endl;
-
-	std::cout << "Минимальное значение в дереве: " << tree.minValue(tree.getRoot()) << std::endl;
-	std::cout << "Максимальное значение в дереве: " << tree.maxValue(tree.getRoot()) << std::endl;
-	std::cout << "Сумма элементов в дереве: " << tree.Sum(tree.getRoot()) << std::endl;
-	std::cout << "Кол-во элементов в дереве:" << tree.Count(tree.getRoot()) << std::endl;
-	std::cout << "Среднее арифметическое :" << tree.AVG(tree.getRoot()) << std::endl;
-
+	std::cout << "Максимальное значение в дереве: " << tree.maxValue(tree.get_root()) << std::endl;
+	std::cout << "Минимальное значение в дереве: " << tree.minValue(tree.get_root()) << std::endl;
+	std::cout << "Сумма элеметов в дереве : " << tree.sum(tree.get_root()) << std::endl;
+	std::cout << "Колличество элеметов в дереве: " << tree.count(tree.get_root()) << std::endl;
+	std::cout << "Среднее арифметическое дерева: " << tree.avg() << std::endl;
 }
