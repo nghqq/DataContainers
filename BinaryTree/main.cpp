@@ -67,13 +67,14 @@ public:
 		if (Root->pRight == nullptr)return Root->Data;
 		else return maxValue(Root->pRight);
 	}
-	int sum(Element* Root) 
+	
+	int sum(Element*Root) 
 	{
 		if (Root == nullptr)return 0;
-		else return Root->Data + sum(Root->pLeft) + sum(Root->pRight);
+		return Root->Data + sum(Root->pLeft) + sum(Root->pRight);
 
 	}
-	int count(Element* Root) 
+	int count(Element* Root)
 	{
 		if (Root == nullptr)return 0;
 		else return count(Root->pLeft) + count(Root->pRight) + 1;
@@ -100,5 +101,5 @@ void main()
 	std::cout << "Минимальное значение в дереве: " << tree.minValue(tree.get_root()) << std::endl;
 	std::cout << "Сумма элеметов в дереве : " << tree.sum(tree.get_root()) << std::endl;
 	std::cout << "Колличество элеметов в дереве: " << tree.count(tree.get_root()) << std::endl;
-	std::cout << "Среднее арифметическое дерева: " << tree.avg() << std::endl;
+	std::cout << "Среднее-арифметическое дерева: " << tree.avg() << std::endl;
 }
