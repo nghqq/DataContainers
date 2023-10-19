@@ -146,7 +146,9 @@ private:
 	  int Depth(Element* Root) 
 	  {
 		  if (Root == nullptr || (Root->pLeft == nullptr && Root->pRight == nullptr))return;
-
+		  int LeftDepth = Depth(Root->pLeft);
+		  int RightDepth = Depth(Root->pRight);
+		  return 
 	  }
 	void clear(Element* Root) 
 	{
