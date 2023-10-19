@@ -92,6 +92,7 @@ public:
 	void erase(int Data) 
 	{
 		erase(Data, Root);
+		erase(Data, Root);
 	}
 private:
 	  void insert(int Data, Element* Root) 
@@ -108,12 +109,12 @@ private:
 			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
 			else insert(Data, Root->pRight);
 		}
-	}
+	}	
 	  void erase(int Data, Element*& Root) 
 	  {
 		  if (Root == nullptr)return;
-		  erase(Data, Root->pLeft);
-		  erase(Data, Root->pRight);
+		  //erase(Data, Root->pLeft);
+		  //erase(Data, Root->pRight);
 		  if (Data == Root->Data)
 		  {
 			  if (Root->pLeft == Root->pRight) 
@@ -136,11 +137,16 @@ private:
 
 			  }
 		  }
-		  //if (Root)
+		  if (Root)
 		  {
 			  //erase(Data, Root->pLeft);
 			  //erase(Data, Root->pRight);
 		  }
+	  }
+	  int Depth(Element* Root) 
+	  {
+		  if (Root == nullptr || (Root->pLeft == nullptr && Root->pRight == nullptr))return;
+
 	  }
 	void clear(Element* Root) 
 	{
@@ -248,7 +254,7 @@ void main()
 
 	//BinaryTree tree = { 50,25,75,16,32,64,90 };
 #ifdef ERASE_CHECK
-	BinaryTree tree = { 5,8,2,6,7,9,10,1,3 };
+	BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
 	tree.print();
 	int value;
 	std::cout << "¬ведите удал€емое значение: "; std::cin >> value;
