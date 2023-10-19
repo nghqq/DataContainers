@@ -201,6 +201,11 @@ private:
 		if (Root == nullptr)return 0;
 		else return count(Root->pLeft) + count(Root->pRight) + 1;
 	}
+	template<typename T>
+	void measure() 
+	{
+
+	}
 	
 }; 
 class UniqueTree : public BinaryTree 
