@@ -60,6 +60,14 @@ public:
 	{
 		insert(Data, Root);
 	}
+	void depth_print(int depth)const
+	{
+		return depth_print(Root,depth);
+	}
+	void tree_print(int depth)const 
+	{
+		return tree_print(0);
+	}
 	void print() const
 	{
 		print(Root);
@@ -163,6 +171,26 @@ private:
 		  int r_depth = depth(Root->pRight) + 1;
 		  return l_depth > r_depth ? l_depth : r_depth;
 	  }
+	  void depth_print(Element* Root,int depth,int width = 4)const
+	  {
+		  if (Root == nullptr)return;
+		  if (depth == 0) 
+		  {
+			  std::cout << Root-> Data << tab;
+			  return;
+		  }
+		  depth_print(Root->pLeft, depth - 1);
+		  depth_print(Root->pRight, depth - 1);
+
+	  }
+	  void tree_print(int depth,int width) const
+	  {
+		  if (depth == this->depth())return;
+		  depth_print(this->Root,depth,width);
+		  std::cout << std::endl;
+		  tree_print(depth + 1,width/2);
+	  }
+
 	void clear(Element* Root) 
 	{
 		if (Root == nullptr)return;
@@ -201,12 +229,6 @@ private:
 		if (Root == nullptr)return 0;
 		else return count(Root->pLeft) + count(Root->pRight) + 1;
 	}
-	template<typename T>
-	void measure() 
-	{
-
-	}
-	
 }; 
 class UniqueTree : public BinaryTree 
 {
@@ -231,8 +253,16 @@ public:
 		insert(Data,Root);
 	}
 };
-
-#define BASE_CHECK
+template<typename T>
+void measure(const char msg[], T(BinaryTree::* function)()const, const BinaryTree& tree)
+{
+	std::cout << msg;
+	clock_t start = clock();
+	T value = (tree.*function)();
+	clock_t end = clock();
+	std::cout << value << " вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+}
+//#define BASE_CHECK
 //#define UNIQUE_TREE_CHECK
 //#define ERASE_CHECK
 //#define DEPTH_CHECK
@@ -249,6 +279,14 @@ void main()
 	}
 	//tree.clear();
 	//tree.print();
+
+	measure("Минимальное значение в дереве: ", &BinaryTree::minValue, tree);
+	measure("Максимальное значение в дереве: ", &BinaryTree::maxValue, tree);
+	measure("Среднее-арифметическое: ", &BinaryTree::avg, tree);
+	measure("Количество эллеметов: ", &BinaryTree::count, tree);
+	measure("Сумма: ", &BinaryTree::sum, tree);
+	measure("Глубина: ", &BinaryTree::depth, tree);
+#ifdef PREFORMANCE_CHECK
 	std::cout << std::endl;
 	clock_t start = clock();   // Функция clock возвращает количестов тактов процессора
 	clock_t end = clock();
@@ -256,7 +294,7 @@ void main()
 	std::cout << "Максимальное значение в дереве: " << tree.maxValue() << " вычислено за ";
 	end = clock();
 	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
-	
+
 	start = clock();
 	std::cout << "Минимальное значение в дереве: " << tree.minValue() << " вычислено за ";
 	end = clock();
@@ -281,6 +319,8 @@ void main()
 	std::cout << "Глубина дерева: " << tree.depth() << " вычислено за ";
 	end = clock();
 	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+#endif // PREFORMANCE_CHECK
+
 
 
 #ifdef UNIQUE_TREE_CHECK
@@ -317,6 +357,9 @@ void main()
 	tree.print();
 	std::cout << "Глубина дерева: " << tree.depth() << std::endl;
 #endif // DEPTH_CHECK
-
-	
+	BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
+	tree.print();
+	int depth;
+	std::cout << "Введите глубину: "; std::cin >> depth;
+	tree.depth_print(depth);
 }
