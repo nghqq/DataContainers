@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #define tab "\t"
 
@@ -149,11 +150,18 @@ private:
 	  }
 	  int depth(Element* Root) const
 	  {
-		  if (Root == nullptr || (Root->pLeft == nullptr && Root->pRight == nullptr))return 0;
-		  int LeftDepth = depth(Root->pLeft);
-		  int RightDepth = depth(Root->pRight);
-		  if (LeftDepth > RightDepth)return LeftDepth + 1;
-		  else return RightDepth + 1;
+		  /*if (Root == nullptr)return 0;
+		  if (depth(Root->pLeft) + 1 > depth(Root->pRight)+1) return depth(Root->pLeft) + 1;
+		  else return depth(Root->pRight) + 1;*/
+
+		  if (Root == nullptr)return 0;
+		  //else return
+			  //depth(Root->pLeft) + 1 > depth(Root->pRight) + 1 ?
+			  //depth(Root->pLeft) + 1 :
+			  //depth(Root->pRight) + 1;
+		  int l_depth = depth(Root->pLeft) + 1;
+		  int r_depth = depth(Root->pRight) + 1;
+		  return l_depth > r_depth ? l_depth : r_depth;
 	  }
 	void clear(Element* Root) 
 	{
@@ -219,9 +227,10 @@ public:
 	}
 };
 
-//#define BASE_CHECK
+#define BASE_CHECK
 //#define UNIQUE_TREE_CHECK
 //#define ERASE_CHECK
+//#define DEPTH_CHECK
 void main() 
 {
 	setlocale(LC_ALL, "");
@@ -234,13 +243,40 @@ void main()
 		tree.insert(rand() % 100);
 	}
 	//tree.clear();
-	tree.print();
+	//tree.print();
 	std::cout << std::endl;
-	std::cout << "Максимальное значение в дереве: " << tree.maxValue() << std::endl;
-	std::cout << "Минимальное значение в дереве: " << tree.minValue() << std::endl;
-	std::cout << "Сумма элеметов в дереве : " << tree.sum() << std::endl;
-	std::cout << "Количество элеметов в дереве: " << tree.count() << std::endl;
-	std::cout << "Среднее-арифметическое дерева: " << tree.avg() << std::endl;
+	clock_t start = clock();   // Функция clock возвращает количестов тактов процессора
+	clock_t end = clock();
+	start = clock();
+	std::cout << "Максимальное значение в дереве: " << tree.maxValue() << " вычислено за ";
+	end = clock();
+	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+	
+	start = clock();
+	std::cout << "Минимальное значение в дереве: " << tree.minValue() << " вычислено за ";
+	end = clock();
+	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+
+	start = clock();
+	std::cout << "Сумма элеметов в дереве : " << tree.sum() << " вычислено за ";
+	end = clock();
+	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+
+	start = clock();
+	std::cout << "Количество элеметов в дереве: " << tree.count() << " вычислено за ";
+	end = clock();
+	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+
+	start = clock();
+	std::cout << "Среднее-арифметическое дерева: " << tree.avg() << " вычислено за ";
+	end = clock();
+	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+
+	start = clock();
+	std::cout << "Глубина дерева: " << tree.depth() << " вычислено за ";
+	end = clock();
+	std::cout << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+
 
 #ifdef UNIQUE_TREE_CHECK
 	UniqueTree utree;
@@ -270,8 +306,12 @@ void main()
 	std::cout << "Количество элеметов в дереве: " << tree.count() << std::endl;
 #endif // ERASE_CHECK
 
-	BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
+#ifdef DEPTH_CHECK
+	//BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
+	BinaryTree tree = { 50, 25, 75, 16, 32, 64, 90, 15 };
 	tree.print();
-	tree.depth();
+	std::cout << "Глубина дерева: " << tree.depth() << std::endl;
+#endif // DEPTH_CHECK
+
 	
 }
