@@ -84,6 +84,10 @@ public:
 	{
 		return(double)sum(Root) / count(Root);
 	}
+	int depth() const
+	{
+		return depth(Root);
+	}
 	void clear() 
 	{
 		clear(Root);
@@ -143,12 +147,13 @@ private:
 			  //erase(Data, Root->pRight);
 		  }
 	  }
-	  int Depth(Element* Root) 
+	  int depth(Element* Root) const
 	  {
-		  if (Root == nullptr || (Root->pLeft == nullptr && Root->pRight == nullptr))return;
-		  int LeftDepth = Depth(Root->pLeft);
-		  int RightDepth = Depth(Root->pRight);
-		  return 
+		  if (Root == nullptr || (Root->pLeft == nullptr && Root->pRight == nullptr))return 0;
+		  int LeftDepth = depth(Root->pLeft);
+		  int RightDepth = depth(Root->pRight);
+		  if (LeftDepth > RightDepth)return LeftDepth + 1;
+		  else return RightDepth + 1;
 	  }
 	void clear(Element* Root) 
 	{
@@ -216,7 +221,7 @@ public:
 
 //#define BASE_CHECK
 //#define UNIQUE_TREE_CHECK
-#define ERASE_CHECK
+//#define ERASE_CHECK
 void main() 
 {
 	setlocale(LC_ALL, "");
@@ -265,5 +270,8 @@ void main()
 	std::cout << "Количество элеметов в дереве: " << tree.count() << std::endl;
 #endif // ERASE_CHECK
 
+	BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
+	tree.print();
+	tree.depth();
 	
 }
