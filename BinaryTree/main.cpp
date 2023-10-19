@@ -66,7 +66,7 @@ public:
 	}
 	void tree_print(int depth)const 
 	{
-		return tree_print(0);
+		return tree_print(0,this->depth*8);
 	}
 	void print() const
 	{
@@ -176,6 +176,7 @@ private:
 		  if (Root == nullptr)return;
 		  if (depth == 0) 
 		  {
+			  std::cout.width(width);
 			  std::cout << Root-> Data << tab;
 			  return;
 		  }
