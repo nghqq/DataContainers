@@ -274,7 +274,7 @@ void measure_chrono(const char msg[], T(BinaryTree::* function)()const, const Bi
 	auto start = std::chrono::high_resolution_clock::now();
 	T value = (tree.*function)();
 	auto end = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<auto> duration = end - start;
+	std::chrono::duration<double> duration = end - start;
 	std::cout << "Время выполнения: " << duration.count() << std::endl;
 
 }
