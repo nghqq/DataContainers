@@ -402,6 +402,14 @@ void main()
 	measure_chrono("Количество эллеметов: ", &BinaryTree::count, tree);
 	measure_chrono("Сумма: ", &BinaryTree::sum, tree);
 	measure_chrono("Глубина: ", &BinaryTree::depth, tree);
+	std::cout << std::endl;
+
+	measure("Минимальное значение в дереве: ", &BinaryTree::minValue, tree);
+	measure("Максимальное значение в дереве: ", &BinaryTree::maxValue, tree);
+	measure("Среднее-арифметическое: ", &BinaryTree::avg, tree);
+	measure("Количество эллеметов: ", &BinaryTree::count, tree);
+	measure("Сумма: ", &BinaryTree::sum, tree);
+	measure("Глубина: ", &BinaryTree::depth, tree);
 #endif // CHRONO_CHECK
 
 	
