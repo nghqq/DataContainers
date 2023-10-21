@@ -64,9 +64,9 @@ public:
 	{
 		return depth_print(Root,depth);
 	}
-	void tree_print(int depth)const 
+	void tree_print()const 
 	{
-		return tree_print(0,this->depth*8);
+		return tree_print(0,this->depth()*4);
 	}
 	void print() const
 	{
@@ -179,15 +179,18 @@ private:
 			  std::cout.width(width);
 			  std::cout << Root-> Data << tab;
 			  return;
-		  }
-		  depth_print(Root->pLeft, depth - 1);
-		  depth_print(Root->pRight, depth - 1);
+		  } 
+		  depth_print(Root->pLeft, depth - 1,width);
+		  std::cout.width(width); std::cout << "";
+		  depth_print(Root->pRight, depth - 1,width);
 
 	  }
 	  void tree_print(int depth,int width) const
 	  {
 		  if (depth == this->depth())return;
 		  depth_print(this->Root,depth,width);
+		  std::cout << std::endl;
+		  std::cout << std::endl;
 		  std::cout << std::endl;
 		  tree_print(depth + 1,width/2);
 	  }
@@ -360,6 +363,7 @@ void main()
 #endif // DEPTH_CHECK
 	BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
 	tree.print();
+	tree.tree_print();
 	int depth;
 	std::cout << "¬ведите глубину: "; std::cin >> depth;
 	tree.depth_print(depth);
