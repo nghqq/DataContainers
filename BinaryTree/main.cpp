@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <chrono>
+#include <ratio>
 
 #define tab "\t"
 
@@ -68,6 +69,10 @@ public:
 	void tree_print()const 
 	{
 		return tree_print(0,this->depth()*4);
+	}
+	void balance()
+	{
+		return balance(Root);
 	}
 	void print() const
 	{
@@ -172,13 +177,17 @@ private:
 		  int r_depth = depth(Root->pRight) + 1;
 		  return l_depth > r_depth ? l_depth : r_depth;
 	  }
-	  void depth_print(Element* Root,int depth,int width = 4)const
+	  void depth_print(Element* Root,int depth,int width = 8)const
 	  {
-		  if (Root == nullptr)return;
+		  if (Root == nullptr)
+		  {
+			  std::cout.width(width * 2); std::cout << "";
+			  return;
+		  }
 		  if (depth == 0) 
 		  {
 			  std::cout.width(width);
-			  std::cout << Root-> Data << tab;
+			  std::cout << Root->Data;
 			  return;
 		  } 
 		  depth_print(Root->pLeft, depth - 1,width);
@@ -193,7 +202,34 @@ private:
 		  std::cout << std::endl;
 		  std::cout << std::endl;
 		  std::cout << std::endl;
+		  std::cout << std::endl;
+		  std::cout << std::endl;
 		  tree_print(depth + 1,width/2);
+	  }
+	  void balance(Element* Root)
+	  {
+		  if (Root == nullptr)return;
+		  if (abs(count(Root->pLeft) - count(Root->pRight) > 2)) 
+		  {
+			  if (count(Root->pLeft) > count(Root->pRight)) 
+			  {
+				  if (Root->pRight == nullptr)Root->pRight = new Element(Root->Data);
+				  else insert(Root->Data, Root->pRight);
+				  Root->Data = maxValue(Root->pLeft);
+				  erase(maxValue(Root->pLeft), Root->pLeft);
+			  }
+			  else 
+			  {
+				  if (Root->pLeft == nullptr)Root->pRight = new Element(Root->Data);
+				  else insert(Root->Data, Root->pLeft);
+				  Root->Data = minValue(Root->pRight);
+				  erase(minValue(Root->pRight), Root->pRight);
+			  }
+			  balance(Root->pLeft);
+			  balance(Root->pRight);
+			  balance(Root);
+
+		  }
 	  }
 
 	void clear(Element* Root) 
@@ -270,11 +306,18 @@ void measure(const char msg[], T(BinaryTree::* function)()const, const BinaryTre
 template<typename T>
 void measure_chrono(const char msg[], T(BinaryTree::* function)()const, const BinaryTree& tree)
 {
+	using namespace std::chrono;
 	std::cout << msg;
-	auto start = std::chrono::high_resolution_clock::now();
+	auto	start = std::chrono::high_resolution_clock::now();
+	//std::chrono::high_resolution_clock::time_point	start = std::chrono::high_resolution_clock::now();
+	std::cout << typeid(start).name() << std::endl;
 	T value = (tree.*function)();
 	auto end = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> duration = end - start;
+	//std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> duration = (end - start);
+	//std::chrono::high_resolution_clock::duration duration = (end - start);
+	std::cout << typeid(duration).name() << std::endl;
+
 	std::cout << "Время выполнения: " << duration.count() << std::endl;
 
 }
@@ -283,7 +326,7 @@ void measure_chrono(const char msg[], T(BinaryTree::* function)()const, const Bi
 //#define ERASE_CHECK
 //#define DEPTH_CHECK
 //#define DEPTH_PRINT_CHECK
-#define CHRONO_CHECK
+//#define CHRONO_CHECK
 void main() 
 {
 	setlocale(LC_ALL, "");
@@ -380,8 +423,8 @@ void main()
 	tree.print();
 	tree.tree_print();
 	int depth;
-	std::cout << "Введите глубину: "; std::cin >> depth;
-	tree.depth_print(depth);
+	//std::cout << "Введите глубину: "; std::cin >> depth;
+	//tree.depth_print(depth);
 #endif // 
 
 #ifdef CHRONO_CHECK
@@ -412,5 +455,8 @@ void main()
 	measure("Глубина: ", &BinaryTree::depth, tree);
 #endif // CHRONO_CHECK
 
-	
+	BinaryTree tree = { 89,55,34,21,13,8,5,3 };
+	tree.balance();
+	tree.tree_print();
+
 }
