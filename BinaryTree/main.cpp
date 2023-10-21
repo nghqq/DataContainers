@@ -384,6 +384,7 @@ void main()
 	tree.depth_print(depth);
 #endif // 
 
+#ifdef CHRONO_CHECK
 
 	int n;
 	std::cout << "Введите размер дерева: "; std::cin >> n;
@@ -401,5 +402,7 @@ void main()
 	measure_chrono("Количество эллеметов: ", &BinaryTree::count, tree);
 	measure_chrono("Сумма: ", &BinaryTree::sum, tree);
 	measure_chrono("Глубина: ", &BinaryTree::depth, tree);
+#endif // CHRONO_CHECK
+
 	
 }
