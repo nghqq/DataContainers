@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <chrono>
 
 #define tab "\t"
 
@@ -266,10 +267,23 @@ void measure(const char msg[], T(BinaryTree::* function)()const, const BinaryTre
 	clock_t end = clock();
 	std::cout << value << " вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
 }
+template<typename T>
+void measure_chrono(const char msg[], T(BinaryTree::* function)()const, const BinaryTree& tree)
+{
+	std::cout << msg;
+	auto start = std::chrono::high_resolution_clock::now();
+	T value = (tree.*function)();
+	auto end = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> duration = end - start;
+	std::cout << "Время выполнения: " << duration.count() << std::endl;
+
+}
 //#define BASE_CHECK
 //#define UNIQUE_TREE_CHECK
 //#define ERASE_CHECK
 //#define DEPTH_CHECK
+//#define DEPTH_PRINT_CHECK
+#define CHRONO_CHECK
 void main() 
 {
 	setlocale(LC_ALL, "");
@@ -361,10 +375,31 @@ void main()
 	tree.print();
 	std::cout << "Глубина дерева: " << tree.depth() << std::endl;
 #endif // DEPTH_CHECK
+#ifdef DEPTH_PRINT_CHECK
 	BinaryTree tree = { 5,8,2,6,7,9,10,1,3,4 };
 	tree.print();
 	tree.tree_print();
 	int depth;
 	std::cout << "Введите глубину: "; std::cin >> depth;
 	tree.depth_print(depth);
+#endif // 
+
+
+	int n;
+	std::cout << "Введите размер дерева: "; std::cin >> n;
+	BinaryTree tree;
+	for (int i = 0; i < n; i++)
+	{
+		tree.insert(rand() % 100);
+	}
+	//tree.clear();
+	//tree.print();
+
+	measure_chrono("Минимальное значение в дереве: ", &BinaryTree::minValue, tree);
+	measure_chrono("Максимальное значение в дереве: ", &BinaryTree::maxValue, tree);
+	measure_chrono("Среднее-арифметическое: ", &BinaryTree::avg, tree);
+	measure_chrono("Количество эллеметов: ", &BinaryTree::count, tree);
+	measure_chrono("Сумма: ", &BinaryTree::sum, tree);
+	measure_chrono("Глубина: ", &BinaryTree::depth, tree);
+	
 }
